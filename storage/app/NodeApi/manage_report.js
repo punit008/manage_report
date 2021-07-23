@@ -33,33 +33,22 @@ async function getReport() {
          * 
          */
 
-         await page.evaluate(() => {
-            let elements = document.getElementsByClassName('website-name');
-            for (let element of elements) {
-                element.click();
-               
-            }
-        });
-        await page.screenshot({ path: 'clicks_foreach.png' })
-        // const website_name = await page.$$('.website-name')
-        // console.log(await page.waitForSelector('.website-name'))
-        await browser.close();
-        // async browser => {
-        //     const promises = []
-        //     for (let i = 0; i < website_name.length; i++) {
-        //         console.log('page spawned', i)
-        //         promises.push(browser.newPage().then(async pages => {
-        //             await page.click(website_name[i])
-        //             await page.screenshot({ path: 'website_name_' + i + '.png' })
-        //         }))
-        //     }
-        // }
-        // await Promise.all(promises)
-        // await browser.close()
+         const websiteNames = await page.$$('.website-name');
 
-        // await page.click('.website-name');
-        // await page.screenshot({ path: 'website-name.png', fullPage: true });
-        // await browser.close();
+         websiteNames.forEach(async (websiteName) => {
+             await page.waitForSelector('.website-name');
+             await job.click();
+             console.log('Yes it worked');
+             // Get the data you want here and push it into the data array
+             await page.goBack();
+           });
+       
+         console.log(websiteNames)
+       
+       
+         await browser.close();
+
+        
 
 
     } catch (error) {
